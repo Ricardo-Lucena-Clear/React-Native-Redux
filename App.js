@@ -1,20 +1,43 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+// Desabilitar Warning
+console.disableYellowBox=true;
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+import React, { Component } from 'react';
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View
+} from 'react-native';
+import { StackNavigator } from 'react-navigation';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+
+import Home from './src/Home';
+import Login from './src/Login';
+import Cadastro from './src/Cadastro'; 
+import Reducers from './src/Reducers';
+
+let store = createStore(Reducers);
+
+const Navegador = StackNavigator({
+  Home:{
+    screen: Home
   },
+  Cadastro:{
+    screen: Cadastro
+  },
+  Login:{
+    screen: Login
+  }
 });
+
+export default class App extends Component{
+  render(){
+    return(
+      <Provider store={store}>
+          <Navegador/>
+      </Provider>
+    );
+  }
+}
